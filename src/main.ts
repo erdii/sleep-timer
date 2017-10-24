@@ -8,44 +8,44 @@ import { isDevelopment } from "./lib/utils";
 let mainWindow;
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
-    resizable: false,
-    maximizable: false,
-    fullscreenable: false,
-    title: "IOTA Seed Generator",
-    frame: false,
-    show: false,
+	// Create the browser window.
+	mainWindow = new BrowserWindow({
+		width: 600,
+		height: 600,
+		resizable: isDevelopment(),
+		maximizable: isDevelopment(),
+		fullscreenable: isDevelopment(),
+		title: "Shutdown Timer",
+		frame: isDevelopment(),
+		show: false,
 
-    // osx only
-    titleBarStyle: "hidden",
-  });
+		// osx only
+		titleBarStyle: "hidden",
+	});
 
-  mainWindow.once("ready-to-show", () => {
-    mainWindow.show();
+	mainWindow.once("ready-to-show", () => {
+		mainWindow.show();
 
-    // open devtools in development mode
-    if (isDevelopment()) {
-      mainWindow.webContents.openDevTools();
-    }
-  });
+		// open devtools in development mode
+		if (isDevelopment()) {
+			mainWindow.webContents.openDevTools();
+		}
+	});
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "index.html"),
-    protocol: "file:",
-    slashes: true,
-  }));
+	// and load the index.html of the app.
+	mainWindow.loadURL(url.format({
+		pathname: path.join(__dirname, "index.html"),
+		protocol: "file:",
+		slashes: true,
+	}));
 
-  // Emitted when the window is closed.
-  mainWindow.on("closed", function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
-  });
+	// Emitted when the window is closed.
+	mainWindow.on("closed", function () {
+		// Dereference the window object, usually you would store windows
+		// in an array if your app supports multi windows, this is the time
+		// when you should delete the corresponding element.
+		mainWindow = null;
+	});
 }
 
 // This method will be called when Electron has finished
@@ -55,7 +55,7 @@ app.on("ready", createWindow);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function () {
-  app.quit();
+	app.quit();
 });
 
 // app.on("activate", function () {
