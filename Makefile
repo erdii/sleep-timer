@@ -14,7 +14,7 @@ build-css: | node_modules shared
 
 .PHONY: watch
 watch:
-	npm run watch
+	yarn run watch
 
 .PHONY: watch-ts
 watch-ts: shared
@@ -26,7 +26,7 @@ watch-css: shared
 
 .PHONY: start
 start:
-	npm start
+	yarn run start
 
 .PHONY: clean
 clean:
@@ -35,7 +35,7 @@ clean:
 	rm -rf dist || true
 
 node_modules:
-	npm i
+	yarn
 
 .PHONY: shared
 shared:
@@ -51,12 +51,12 @@ dist: dist-linux dist-mac dist-win
 # USE_SYSTEM_XORRISO=true make dist-linux
 .PHONY: dist-linux
 dist-linux:
-	npm run dist-linux
+	yarn run dist-linux
 
 .PHONY: dist-mac
 dist-mac:
-	npm run dist-mac
+	yarn run dist-mac
 
 .PHONY: dist-win
 dist-win:
-	npm run dist-win
+	yarn run dist-win
