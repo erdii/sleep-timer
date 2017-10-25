@@ -1,6 +1,6 @@
 {
 	"name": "sleep-timer",
-	"version": "1.0.0",
+	"version": "0.0.3",
 	"description": "Easy to use sleep timer app.",
 	"main": "build/main.js",
 	"scripts": {
