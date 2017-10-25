@@ -1,13 +1,25 @@
 .PHONY: release
-release: | clean build dist
+release: | clean build build-css dist
 
 .PHONY: build
 build: | node_modules shared
 	node_modules/.bin/tsc
 
+.PHONY: build-css
+build-css: | node_modules shared
+	node_modules/.bin/lessc src/styles/index.less build/index.css
+
 .PHONY: watch
-watch: shared
+watch:
+	npm run watch
+
+.PHONY: watch-ts
+watch-ts: shared
 	node_modules/.bin/tsc -w
+
+.PHONY: watch-css
+watch-css: shared
+	PATH="$(PATH):node_modules/.bin" less-watch-compiler src/styles build index.less
 
 .PHONY: start
 start:
@@ -26,7 +38,6 @@ node_modules:
 shared:
 	mkdir build || true
 	cp src/index.html build/index.html
-	node_modules/.bin/lessc src/styles.less build/styles.css
 
 .PHONY: dist
 dist: dist-linux dist-mac dist-win

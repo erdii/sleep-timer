@@ -15,7 +15,7 @@ function createWindow() {
 		resizable: isDevelopment(),
 		maximizable: isDevelopment(),
 		fullscreenable: isDevelopment(),
-		title: "Shutdown Timer",
+		title: "Sleep Timer",
 		frame: isDevelopment(),
 		show: false,
 

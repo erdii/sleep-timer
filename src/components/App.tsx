@@ -116,11 +116,27 @@ export default class App extends React.Component<any, any> {
 				<section className="button">
 					{ this.running ? (
 						<Aux>
-							<input type="button" onClick={this.stop(false)} value="Stop"/>&nbsp;
-							<input type="button" onClick={this.stop()} value="Reset"/>
+							<input
+								type="button"
+								onClick={this.stop(false)}
+								value="Stop"
+								tabIndex={-1}
+							/>
+							&nbsp;
+							<input
+								type="button"
+								onClick={this.stop()}
+								value="Reset"
+								tabIndex={-1}
+							/>
 						</Aux>
 					) : (
-						<input type="button" onClick={this.start} value="Start"/>
+						<input
+							type="button"
+							onClick={this.start}
+							value="Start"
+							tabIndex={-1}
+						/>
 					)}
 				</section>
 			</div>

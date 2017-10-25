@@ -1,6 +1,6 @@
-# Iota Seedgen Gui
+# Sleep timer
 
-the friendly cross-platform (Mac, Windows, Linux for now) seed generator (based on [iota-seedgen](https://github.com/erdii/iota-seedgen)!
+the friendly cross-platform (Mac, Windows, Linux for now) shutdown timer!
 
 <p align="center">
 	<img src="https://blog.werise.de/files/iota-seedgen-gui/screenshot.png" alt="example screenshot" />
@@ -11,7 +11,7 @@ the friendly cross-platform (Mac, Windows, Linux for now) seed generator (based 
 
 ### Development
 * build typescript, less and html: `make build`
-* watch typescript: `make watch`
+* watch typescript, less: `make watch`
 * start app in dev mode: `make start`
 * create releases: `make release`
 
