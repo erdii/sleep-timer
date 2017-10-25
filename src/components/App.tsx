@@ -87,7 +87,7 @@ export default class App extends React.Component<any, any> {
 				) : null }
 
 				<section className="timer">
-					{this.displayTime}
+					ETA: {this.displayTime}
 				</section>
 
 				{this.running ? (
