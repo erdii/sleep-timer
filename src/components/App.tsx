@@ -1,9 +1,10 @@
+import Title from "./Title";
 import { clearTimeout } from "timers";
 import * as React from "react";
 import { action, computed, observable } from "mobx";
 import { observer } from "mobx-react";
 import { now } from "mobx-utils";
-import { shutdown, isOSX } from "../lib/utils";
+import { prefixNum, shutdown, isOSX } from "../lib/utils";
 import Aux from "./Aux";
 
 @observer
@@ -35,15 +36,18 @@ export default class App extends React.Component<any, any> {
 	}
 
 	@computed private get remainingSeconds() {
-		return Math.floor(this.remainingMillis / 1000) % 60;
+		const value = Math.floor(this.remainingMillis / 1000) % 60;
+		return prefixNum(value);
 	}
 
 	@computed private get remainingMinutes() {
-		return Math.floor(this.remainingMillis / 60000) % 60;
+		const value = Math.floor(this.remainingMillis / 60000) % 60;
+		return prefixNum(value);
 	}
 
 	@computed private get remainingHours() {
-		return Math.floor(this.remainingMillis / 3600000);
+		const value = Math.floor(this.remainingMillis / 3600000);
+		return prefixNum(value);
 	}
 
 	@computed private get _relativeTime() {
@@ -68,6 +72,20 @@ export default class App extends React.Component<any, any> {
 		}
 	}
 
+	@computed private get title() {
+		const { running, displayTime } = this;
+
+		let timeString = "";
+
+		if (running) {
+			timeString = this.remainingHours + ":" + this.remainingMinutes + ":" + this.remainingSeconds;
+		} else {
+			timeString = prefixNum(this.hours) + ":" + prefixNum(this.minutes) + ":" + prefixNum(this.seconds);
+		}
+
+		return `${this.running ? "▶" : "■"} ${timeString}`
+	}
+
 	public componentDidMount() {
 		this.inputElemM.focus();
 		document.addEventListener("keydown", this.handleKey, false);
@@ -80,6 +98,8 @@ export default class App extends React.Component<any, any> {
 	public render() {
 		return (
 			<div id="app">
+				<Title text={this.title}/>
+
 				{ !isOSX() ? (
 					<div id="close">
 						<button onClick={ window.close }>x</button>
@@ -92,26 +112,31 @@ export default class App extends React.Component<any, any> {
 
 				{this.running ? (
 					<section className="countdown">
-						<span>{this.remainingHours}</span>&nbsp;
-						<span>{this.remainingMinutes}</span>&nbsp;
+						<span>{this.remainingHours}</span>
+						<span>:</span>
+						<span>{this.remainingMinutes}</span>
+						<span>:</span>
 						<span>{this.remainingSeconds}</span>
 					</section>
 				) : (
 					<section className="input">
 						<input type="number"
 							onChange={this.handleNumberChange("H")}
+							onKeyDown={this.handleKeyInput("H")}
 							ref={el => this.inputElemH = el}
 							value={this.hours}
 							tabIndex={1}
 						/>
 						<input type="number"
 							onChange={this.handleNumberChange("M")}
+							onKeyDown={this.handleKeyInput("M")}
 							ref={el => this.inputElemM = el}
 							value={this.minutes}
 							tabIndex={2}
 						/>
 						<input type="number"
 							onChange={this.handleNumberChange("S")}
+							onKeyDown={this.handleKeyInput("S")}
 							ref={el => this.inputElemS = el}
 							value={this.seconds}
 							tabIndex={3}
@@ -149,6 +174,50 @@ export default class App extends React.Component<any, any> {
 		)
 	}
 
+	@action private handleKeyInput = (type: "H"|"M"|"S") => (event: any) => {
+		let _type = type;
+
+		if (event.key === "Backspace") {
+			if (_type === "S") {
+				if (this.seconds > 0) {
+					if (this.seconds % 10 !== 0) {
+						this.seconds -= this.seconds % 10;
+					} else {
+						this.seconds *= 0.1;
+					}
+				} else {
+					_type = "M";
+				}
+			}
+
+			if (_type === "M") {
+				if (this.minutes > 0) {
+					const singleMinutes = this.minutes % 10;
+					if (singleMinutes !== 0) {
+						this.minutes -= singleMinutes;
+					} else {
+						this.minutes *= 0.1;
+					}
+				} else {
+					_type = "H";
+				}
+			}
+
+			if (_type === "H") {
+				if (this.hours > 0) {
+					const singleHours = this.hours % 10;
+					if (singleHours !== 0) {
+						this.hours -= singleHours;
+					} else {
+						this.hours *= 0.1;
+					}
+				} else {
+					_type = "H";
+				}
+			}
+		}
+	}
+
 	// THIS IS A MONSTER!
 	@action private handleNumberChange = (type: "H"|"M"|"S") => () => {
 		let value;
@@ -174,6 +243,10 @@ export default class App extends React.Component<any, any> {
 						this.hours--;
 						this.minutes = 59;
 					}
+				} else if (value > 60) {
+					const additionalHours = Math.floor(value / 60);
+					this.hours += additionalHours;
+					this.minutes = value % 60;
 				}
 				else return false;
 				break;
@@ -200,6 +273,17 @@ export default class App extends React.Component<any, any> {
 						this.minutes = 59;
 						this.seconds = 59;
 					}
+				} else if (value > 60) {
+					const additionalMinutes = Math.floor(value / 60);
+					if (this.minutes + additionalMinutes > 60) {
+						const additionalHours = Math.floor(value / 60);
+						this.hours += additionalHours;
+						this.minutes = additionalMinutes % 60;
+					} else {
+						this.minutes += additionalMinutes;
+					}
+
+					this.seconds = value % 60;
 				}
 
 				else return false;
@@ -220,9 +304,9 @@ export default class App extends React.Component<any, any> {
 
 	@action private stop = (reset = true) => () => {
 		if (!reset) {
-			this.hours = this.remainingHours;
-			this.minutes = this.remainingMinutes;
-			this.seconds = this.remainingSeconds;
+			this.hours = parseInt(this.remainingHours, 10);
+			this.minutes = parseInt(this.remainingMinutes, 10);
+			this.seconds = parseInt(this.remainingSeconds, 10);
 		} else {
 			const [ hours, minutes, seconds ] = this.stashHMS;
 			this.hours = hours;
@@ -241,7 +325,6 @@ export default class App extends React.Component<any, any> {
 		this.running = false;
 
 		// shutdown the pc
-		console.log("beeeeeeeeeeeeeep");
 		shutdown();
 	}
 

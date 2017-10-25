@@ -3,6 +3,11 @@ import { platform } from "os";
 import { resolve } from "path";
 
 export function shutdown() {
+	console.log("beeeeeeeeeeeeeep");
+	if (isDevelopment()) {
+		throw new Error("ENODEVSHUTDOWN");
+	}
+
 	switch (platform()) {
 		case "linux":
 			exec("poweroff -i");
@@ -29,4 +34,14 @@ export function isOSX() {
 
 export function isDevelopment(): boolean {
 	return process.env.NODE_ENV === "development";
+}
+
+export function prefixNum(value: number|string) {
+	let str = value.toString();
+
+	if (str.length < 2) {
+		return "0" + value;
+	} else {
+		return str;
+	}
 }
