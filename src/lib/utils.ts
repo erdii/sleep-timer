@@ -8,7 +8,10 @@ export function shutdown() {
 			exec("poweroff -i");
 			break;
 		case "win32":
-			exec("shutdown -s -t 0")
+			exec("shutdown -s -t 0");
+			break;
+		case "darwin":
+			exec("osascript -e 'tell app \"System Events\" to shut down'");
 			break;
 		default: throw new Error("EOSNOTIMPLEMENTED");
 	}
