@@ -7,8 +7,11 @@
 @colorInput: #efefef;
 @colorInputHover: @colorInput - 30%;
 
+@fontSize: 25px;
+
 body {
 	font-family: arial;
+	font-size: @fontSize;
 	overflow: hidden;
 	margin: 0;
 }
@@ -39,6 +42,7 @@ input[type="button"] {
 	background-color: @colorButton;
 	border: 0;
 	padding: 15px 30px;
+	font-size: @fontSize;
 
 	&:hover {
 		background-color: @colorButtonHover;
@@ -54,9 +58,9 @@ input[type="button"] {
 
 	input[type="number"],
 	span {
-		border-radius: 50px;
-		width: 50px;
+		font-size: @fontSize;
 		height: 50px;
+		max-width: 100px;
 		outline: none;
 		text-align: center;
 		line-height: 25px;
