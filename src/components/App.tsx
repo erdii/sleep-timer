@@ -208,6 +208,11 @@ export default class App extends React.Component<any, any> {
 	}
 
 	@action private start = () => {
+		// don't start the timer when everything is 0
+		if (this.hours === 0 && this.minutes === 0 && this.seconds === 0) {
+			return;
+		}
+
 		this._shutdownTime = new Date(this._relativeTime.getTime());
 		this.timer = setTimeout(this.shutdown, this._shutdownTime.getTime() - Date.now());
 		this.running = true;
