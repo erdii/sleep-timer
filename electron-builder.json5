@@ -19,7 +19,7 @@
 	appImage: {
 		systemIntegration: "ask",
 		synopsis: "Convenient shutdown timer for couch-napping",
-		category: "Utilities",
+		category: "Utility",
 	},
 
 	// windows stuff
