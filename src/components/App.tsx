@@ -237,7 +237,7 @@ export default class App extends React.Component<any, any> {
 
 		// shutdown the pc
 		console.log("beeeeeeeeeeeeeep");
-		// shutdown();
+		shutdown();
 	}
 
 	private handleKey = (event: any) => {
