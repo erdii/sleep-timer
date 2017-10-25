@@ -3,7 +3,7 @@ import * as React from "react";
 import { action, computed, observable } from "mobx";
 import { observer } from "mobx-react";
 import { now } from "mobx-utils";
-import { shutdown } from "../lib/utils";
+import { shutdown, isOSX } from "../lib/utils";
 import Aux from "./Aux";
 
 @observer
@@ -80,6 +80,12 @@ export default class App extends React.Component<any, any> {
 	public render() {
 		return (
 			<div id="app">
+				{ !isOSX() ? (
+					<div id="close">
+						<button onClick={ window.close }>x</button>
+					</div>
+				) : null }
+
 				<section className="timer">
 					{this.displayTime}
 				</section>

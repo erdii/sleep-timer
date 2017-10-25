@@ -42,6 +42,10 @@ shared:
 .PHONY: dist
 dist: dist-linux dist-mac dist-win
 
+# bug!
+# https://github.com/electron-userland/electron-builder/issues/993
+# install libisoburn
+# USE_SYSTEM_XORRISO=true make dist-linux
 .PHONY: dist-linux
 dist-linux:
 	npm run dist-linux

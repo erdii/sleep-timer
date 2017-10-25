@@ -4,6 +4,9 @@
 @colorButton: #3b2b70;
 @colorButtonHover: @colorButton - 30%;
 
+@colorInput: #efefef;
+@colorInputHover: @colorInput - 30%;
+
 body {
 	font-family: arial;
 	overflow: hidden;
@@ -60,6 +63,16 @@ input[type="button"] {
 	}
 }
 
+.input {
+	input {
+		background-color: @colorInput;
+
+		&:hover {
+			background-color: @colorInputHover;
+		}
+	}
+}
+
 #app {
 	margin: 0;
 	background: @colorMainBG;
@@ -71,4 +84,33 @@ input[type="button"] {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
+}
+
+#close {
+	button {
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		width: 40px;
+		height: 40px;
+		padding: 5px;
+		font-size: 24px;
+
+		outline: none;
+		display: block;
+		text-transform: uppercase;
+		text-align: center;
+		text-decoration: none;
+		border: none;
+		cursor: pointer;
+
+		color: #fff;
+		background: @colorButton;
+		transition: background-color 0.3s ease;
+
+		&:hover {
+			background: @colorButtonHover;
+		}
+	}
 }

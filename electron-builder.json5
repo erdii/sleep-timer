@@ -1,41 +1,41 @@
 {
-    appId: "com.electron.iota-seedgen",
-    productName: "IOTA Seed Generator",
-    asar: true,
-    files: [
-        "build/**/*"
-    ],
-    extraResources: [
-        "bin/*${os}*"
-    ],
+	appId: "com.electron.sleep-timer",
+	productName: "Sleep Timer",
+	asar: true,
+	files: [
+		"build/**/*"
+	],
+	extraResources: [
+		"bin/*${os}*"
+	],
 
-    // linux stuff
-    linux: {
-        target: "AppImage", // what about appx?
-        // icon: "build/icon.ico" // path to app icon
-        // TODO: configure signing
-        // TODO: configure WM_CLASS
-    },
-    appImage: {
-        systemIntegration: "ask",
-        synopsis: "Wallet seed generator for the cryptocurrency IOTA",
-        category: "Finance",
-    },
+	// linux stuff
+	linux: {
+		target: "AppImage", // what about appx?
+		// icon: "build/icon.ico" // path to app icon
+		// TODO: configure signing
+		// TODO: configure WM_CLASS
+	},
+	appImage: {
+		systemIntegration: "ask",
+		synopsis: "Convenient shutdown timer for couch-napping",
+		category: "Utilities",
+	},
 
-    // windows stuff
-    win: {
-        target: "nsis",
+	// windows stuff
+	win: {
+		target: "nsis",
 
-        // TODO: configure signing
-    },
+		// TODO: configure signing
+	},
 
-    // mac stuff
+	// mac stuff
 
-    mac: {
-        target: "dmg",
-        category: "public.app-category.finance",
-        // icon: "icon.icns", // path to app icon
+	mac: {
+		target: "dmg",
+		category: "public.app-category.utilities",
+		// icon: "icon.icns", // path to app icon
 
-        // TODO: configure signing
-    },
+		// TODO: configure signing
+	},
 }
