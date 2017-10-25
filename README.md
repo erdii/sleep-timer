@@ -3,7 +3,7 @@
 the friendly cross-platform (Mac, Windows, Linux for now) shutdown timer!
 
 <p align="center">
-	<img src="https://blog.werise.de/files/iota-seedgen-gui/screenshot.png" alt="example screenshot" />
+	<img src="https://blog.werise.de/files/sleep-timer/screen-sleep-timer.png" alt="example screenshot" />
 </p>
 
 ### Installation
