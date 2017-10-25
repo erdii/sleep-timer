@@ -1,8 +1,11 @@
 .PHONY: release
-release: | clean build build-css dist
+release: | clean build dist
 
 .PHONY: build
-build: | node_modules shared
+build: | build-ts build-css
+
+.PHONY: build-ts
+build-ts: | node_modules shared
 	node_modules/.bin/tsc
 
 .PHONY: build-css
